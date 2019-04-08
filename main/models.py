@@ -75,15 +75,17 @@ class Publication(models.Model):
     text = models.TextField(verbose_name=('İçerik')) 
     #tags = models.ManyToManyField(Tags)
 
+class Survey(models.Model):
+    name = models.CharField(max_length=128)
+    ask_count = models.IntegerField(default=0)
+    surveyors = models.ForeignKey(Surveyer,models.DO_NOTHING)
+    fee = models.IntegerField(default=5000)
+
 class Question(models.Model):
     name = models.CharField(max_length=255)
+    survey = models.ForeignKey(Survey,on_delete=models.CASCADE)
 
 class Answers(models.Model):
     text = models.CharField(max_length=128)
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
 
-class Survey(models.Model):
-    ask_count = models.IntegerField(default=0)
-    surveyors = models.ForeignKey(Surveyer,models.DO_NOTHING)
-    fee = models.IntegerField(default=5000)
-    questions = models.ForeignKey(Question,models.DO_NOTHING)
