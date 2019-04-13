@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ object.name }}</h1>
+    <p>Sorulacak Kişi Sayısı: {{ object.ask_count }}</p>
+    <p>Ücret: {{ object.fee }}</p>
+   
+    <p>Sorulacak Sorular:</p>
+    <ul>
+        {% for q in questions %}
+            <li>{{ q.name }}</li>
+        {% endfor %}
+    </ul>
+    <a class="btn btn-primary" href="{% url 'main:survey_update' object.id  %}">Anketi Güncelle</a>
+    <a class="btn btn-danger" href="{% url 'main:survey_delete' object.id  %}">Anketi Sil</a>
+</div>
+
+
+{% endblock %}

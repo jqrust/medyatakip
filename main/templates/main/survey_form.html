@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
+<form class="form-control" method="post">{% csrf_token %}
+    {{ form|crispy }}
+    <ul class="list-group">
+        {% for q in questions %}
+        <li class="list-group-item"><a href= "{% url 'main:question_detail' object.id q.id  %}"> {{ q.name }} </a></li>
+        {% endfor %}
+    </ul>
+    <a class="btn btn-primary" href="{% url 'main:question_create' object.id %}">Soru Ekle</a></br></br>
+    <input class="btn btn-success"  type="submit" value="Kaydet">
 </form>
 {% endblock %}

@@ -38,7 +38,7 @@ class User(AbstractBaseUser,PermissionsMixin):
         ordering = ['email']
 
 class Customer(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,unique=True)
     fee = models.IntegerField(blank=False,null=False)
 
     intervals = (
@@ -48,7 +48,7 @@ class Customer(models.Model):
         ('Y' , 'Yearly'),
     )
     report_interval = models.CharField(max_length=1,choices=intervals,default='M')
-    date_last_report = models.DateTimeField(blank=True)
+    date_last_report = models.DateTimeField(blank=True,null=True)
     class Meta:
         abstract = True
 class Company(Customer):
@@ -60,12 +60,16 @@ class Person(Customer):
     last_name  = models.CharField(max_length=64) 
     tc_id = models.IntegerField(unique=True)
     
-class Surveyer(models.Model):
+class Surveyor(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     first_name = models.CharField(max_length=64)
     last_name  = models.CharField(max_length=64)
+    def get_name(self):
+        return self.first_name +' '+ self.last_name
+    def __str__(self):
+        return self.get_name()
 
-class Outlet(models.Model):
+class Outlet(models.Model): 
     name = models.CharField(max_length=64)    
     
 class Publication(models.Model):
@@ -78,14 +82,18 @@ class Publication(models.Model):
 class Survey(models.Model):
     name = models.CharField(max_length=128)
     ask_count = models.IntegerField(default=0)
-    surveyors = models.ForeignKey(Surveyer,models.DO_NOTHING)
+    surveyors = models.ManyToManyField(Surveyor,related_name='surveys',blank=True)
     fee = models.IntegerField(default=5000)
+    def __str__(self):
+        return self.name
 
 class Question(models.Model):
     name = models.CharField(max_length=255)
     survey = models.ForeignKey(Survey,on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
-class Answers(models.Model):
+class Answer(models.Model):
     text = models.CharField(max_length=128)
-    question = models.ForeignKey(Question,on_delete=models.CASCADE)
+    question = models.ForeignKey(Question,related_name="answer_set",on_delete=models.CASCADE)
 

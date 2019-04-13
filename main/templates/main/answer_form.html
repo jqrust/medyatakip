@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>{{question_name}}</h1>
+<form class="form-control" method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-success" type="submit" value="Kaydet">
+</form>
+{% if object %}
+    <a class="btn btn-danger" href="{% url 'main:answer_delete' object.question.survey.id object.question.id object.id %}">Cevabı Sil</a>
+{% endif %}
+{% endblock %}

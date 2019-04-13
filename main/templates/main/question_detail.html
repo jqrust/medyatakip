@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ object.name }}</h1>
+    
+   
+   
+    <p>Cevaplar:</p>
+    <ul>
+        {% for a in answer_list %}
+            <li><a href= "{% url 'main:answer_update' a.question.survey.id a.question.id a.id  %}">{{ a.text }}</li>
+        {% endfor %}
+    </ul>
+    <a class="btn btn-primary" href="{% url 'main:answer_create' object.survey.id object.id %}">Cevap Ekle</a>
+    <a class="btn btn-danger" href="{% url 'main:question_delete' object.survey.id object.id %}">Soruyu Sil</a>
+</div>
+
+
+{% endblock %}

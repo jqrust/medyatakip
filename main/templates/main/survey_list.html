@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <ul class="list-group">
+        {% for object in object_list %}
+        <li class="list-group-item"><a href= "{% url 'main:survey_detail' object.id  %}"> {{ object.name }} </a> </li>
+        {% endfor %}
+    </ul>
+    <a class="btn btn-success" href="{% url 'main:survey_create' %}">Yeni Anket Oluştur</a>
+</div>
+{% endblock %}
