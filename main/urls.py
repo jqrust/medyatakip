@@ -18,5 +18,6 @@ urlpatterns = [
     path('survey/<int:pk>/<int:pk_q>/<int:pk_answer>/',views.AnswerUpdate.as_view(),name="answer_update"),
     path('survey/<int:pk>/<int:pk_q>/<int:pk_answer>/delete',views.AnswerDelete.as_view(),name="answer_delete"),
 
-    
+    path('publication/',views.PublicationList.as_view(),name="publication_list"),
+    path('publication/<int:pk>',views.PublicationDetail.as_view(),name="publication_detail"),
 ]

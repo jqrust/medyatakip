@@ -4,7 +4,7 @@ from django.views.generic import edit
 from django.contrib.auth import authenticate, login, logout, get_user
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
-from .models import Survey, Question, Answer
+from .models import Survey, Question, Answer, Publication
 class LoginView(generic.View):
     template_name = 'main/login.html'
     def get(self,request,*args,**kwargs):
@@ -119,3 +119,17 @@ class AnswerDelete(edit.DeleteView):
         return Answer.objects.get(pk=self.kwargs['pk_answer'])
     def get_success_url(self):
         return reverse('main:question_detail',kwargs={'pk': self.kwargs['pk'],'pk_q': self.kwargs['pk_q']})
+
+class PublicationList(generic.ListView):
+    template_name = 'main/publication_list.html'
+    model = Publication
+    def get_queryset(self):
+        return self.request.user.publications.all
+
+class PublicationDetail(generic.DetailView):
+    model = Publication
+    fields = ['header', 'source', 'date_published','date_created','text']
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_staff'] = self.request.user.is_staff
+        return context
