@@ -19,5 +19,9 @@ urlpatterns = [
     path('survey/<int:pk>/<int:pk_q>/<int:pk_answer>/delete',views.AnswerDelete.as_view(),name="answer_delete"),
 
     path('publication/',views.PublicationList.as_view(),name="publication_list"),
-    path('publication/<int:pk>',views.PublicationDetail.as_view(),name="publication_detail"),
+    path('publication/create/',views.PublicationCreate.as_view(),name="publication_create"),
+    path('publication/<int:pk>/',views.PublicationDetail.as_view(),name="publication_detail"),
+    path('publication/<int:pk>/update/',views.PublicationUpdate.as_view(),name="publication_update"),
+    path('publication/<int:pk>/delete/',views.PublicationDelete.as_view(),name="publication_delete"),
+
 ]

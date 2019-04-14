@@ -125,6 +125,10 @@ class PublicationList(generic.ListView):
     model = Publication
     def get_queryset(self):
         return self.request.user.publications.all
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_staff'] = self.request.user.is_staff
+        return context
 
 class PublicationDetail(generic.DetailView):
     model = Publication
@@ -133,3 +137,18 @@ class PublicationDetail(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['is_staff'] = self.request.user.is_staff
         return context
+
+class PublicationUpdate(edit.UpdateView):
+    model = Publication
+    fields = ['header', 'source', 'date_published', 'text','releated_to']
+    def get_success_url(self):
+        return reverse_lazy('main:publication_detail',kwargs={'pk': self.kwargs['pk']})
+
+class PublicationCreate(edit.CreateView):
+    model = Publication
+    fields = ['header', 'source', 'date_published', 'text','releated_to']
+    success_url = reverse_lazy('main:publication_list')
+
+class PublicationDelete(edit.DeleteView):
+    model = Publication
+    success_url = reverse_lazy('main:publication_list')

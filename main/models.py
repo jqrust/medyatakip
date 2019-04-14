@@ -86,7 +86,7 @@ class Publication(models.Model):
     date_published= models.DateTimeField()
     date_created = models.DateTimeField(auto_now=True)
     text = models.TextField(verbose_name=('İçerik')) 
-    related_to = models.ManyToManyField(User,related_name='publications')
+    releated_to = models.ManyToManyField(User,related_name='publications')
     #tags = models.ManyToManyField(Tags)
     def __str__(self):
         return self.header

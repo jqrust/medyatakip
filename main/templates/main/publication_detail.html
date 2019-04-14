@@ -8,8 +8,8 @@
     <p> {{ object.date_created }}</p>
     <p> {{ object.text }}</p>
     {% if is_staff %}
-    <a class="btn btn-primary" href=#>Yayın Güncelle</a>
-    <a class="btn btn-danger" href=#>Yayın Sil</a>
+    <a class="btn btn-primary" href="{% url 'main:publication_update' object.id %}">Yayın Güncelle</a>
+    <a class="btn btn-danger" href="{% url 'main:publication_delete' object.id %}">Yayın Sil</a>
     {% endif %}
 </div>
 

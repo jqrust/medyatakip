@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'Scripts/jquery.datetimepicker.css' %}"/>
+<script src="{% static 'Scripts/jquery.js' %}"></script>
+<script src="{% static 'Scripts/build/jquery.datetimepicker.full.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>{{survey_name}}</h1>
+<form class="form-control" method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-success" type="submit" value="Kaydet">
+</form>
+{% if object %}
+<a class="btn btn-danger" href="{% url 'main:publication_delete' object.id %}">Yayını Sil</a>
+{% endif %}
+<script>
+    jQuery('#id_date_published').datetimepicker({
+        format: 'Y-m-d H:i:s',
+    });
+</script>
+{% endblock %}

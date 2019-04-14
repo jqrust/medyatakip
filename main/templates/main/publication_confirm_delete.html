@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <form method="post">{% csrf_token %}
+        <p>"{{ object.header }}" Bu yayını silmek istediğinizden emin misiniz?</p>
+        <input class="btn btn-danger" type="submit" value="Evet">
+        <a class="btn btn-secondary" href="{% url 'main:publication_detail' object.id  %}">Hayır</a>
+    </form>
+</div>
+{% endblock %}
