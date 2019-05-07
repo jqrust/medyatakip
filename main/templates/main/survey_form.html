@@ -8,7 +8,9 @@
         <li class="list-group-item"><a href= "{% url 'main:question_detail' object.id q.id  %}"> {{ q.name }} </a></li>
         {% endfor %}
     </ul>
+    {% if object %}
     <a class="btn btn-primary" href="{% url 'main:question_create' object.id %}">Soru Ekle</a></br></br>
+    {% endif %}
     <input class="btn btn-success"  type="submit" value="Kaydet">
 </form>
 {% endblock %}

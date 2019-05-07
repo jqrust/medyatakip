@@ -20,7 +20,7 @@ class LoginView(generic.View):
                 "not_user": True
             }
             return render(request,"main/login.html", context)
-        return render(request,"main/login.html")
+        return redirect(reverse_lazy('main:home'))
 def logout_view(request):
     logout(request)
     return redirect("../")
@@ -38,7 +38,7 @@ class SurveyDetail(generic.DetailView):
         return context
 class SurveyCreate(edit.CreateView):
     model = Survey
-    fields = ['name','ask_count','fee']
+    fields = ['name','ask_count','fee','created_by']
     success_url = reverse_lazy('main:survey_list')
 class SurveyDelete(edit.DeleteView):
     model= Survey
