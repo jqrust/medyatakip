@@ -30,7 +30,8 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
+    def __unicode__(self):
+        return self.email
     class Meta:
         swappable = 'AUTH_USER_MODEL'
         verbose_name = ('user')
